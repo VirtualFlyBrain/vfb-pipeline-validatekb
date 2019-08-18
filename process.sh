@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 echo "Validate KB"
 
 echo 'START' >> ${WORKSPACE}/tick.out
