@@ -29,7 +29,7 @@ RUN cd "${CONF_BASE_TEMP}" && git clone --quiet ${CONF_REPO} && cd $(ls -d */|he
 # copy inner project folder from temp to conf base
 RUN cd "${CONF_BASE_TEMP}" && cd $(ls -d */|head -n 1) && cp -R . $CONF_BASE && cd $CONF_BASE && rm -r ${CONF_BASE_TEMP}
 
-ENV GITBRANCH=kbold2new
+ENV GITBRANCH=kbold2new_neo4j_v4
 
 ENV RUNSILENT=https://raw.githubusercontent.com/VirtualFlyBrain/pipeline/master/runsilent.sh
 
