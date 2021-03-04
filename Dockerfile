@@ -2,6 +2,13 @@ FROM python:3.6
 
 VOLUME /logs
 
+# from compose args
+ARG CONF_REPO
+ARG CONF_BRANCH
+
+ENV CONF_BASE=/opt/conf_base
+ENV CONF_DIR=${CONF_BASE}/config/validatekb
+
 ENV WORKSPACE=/opt/VFB
 ENV VFB_OWL_VERSION=Current
 ENV CHUNK_SIZE=1000
@@ -11,15 +18,18 @@ ENV BUILD_OUTPUT=${WORKSPACE}/build.out
 RUN pip3 install wheel requests psycopg2 pandas base36
 
 RUN apt-get -qq update || apt-get -qq update && \
-apt-get -qq -y install git curl wget default-jdk pigz maven libpq-dev python-dev tree gawk
+apt-get -qq -y install git curl wget default-jdk pigz maven libpq-dev python-dev tree gawk git
 
-ENV KBserver=http://192.168.0.1:7474
+RUN mkdir $CONF_BASE
 
-ENV KBuser=neo4j
+###### REMOTE CONFIG ######
+ARG CONF_BASE_TEMP=${CONF_BASE}/temp
+RUN mkdir $CONF_BASE_TEMP
+RUN cd "${CONF_BASE_TEMP}" && git clone --quiet ${CONF_REPO} && cd $(ls -d */|head -n 1) && git checkout ${CONF_BRANCH}
+# copy inner project folder from temp to conf base
+RUN cd "${CONF_BASE_TEMP}" && cd $(ls -d */|head -n 1) && cp -R . $CONF_BASE && cd $CONF_BASE && rm -r ${CONF_BASE_TEMP}
 
-ENV KBpassword=password
-
-ENV GITBRANCH=kbold2new
+ENV GITBRANCH=kbold2new_neo4j_v4
 
 ENV RUNSILENT=https://raw.githubusercontent.com/VirtualFlyBrain/pipeline/master/runsilent.sh
 

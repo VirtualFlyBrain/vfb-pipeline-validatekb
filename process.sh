@@ -10,6 +10,10 @@ date
 echo 'START' >> ${WORKSPACE}/tick.out
 ## tail -f ${WORKSPACE}/tick.out >&1 &>&1
 
+## get remote configs
+echo "Sourcing remote config"
+source ${CONF_DIR}/config.env
+
 cd ${WORKSPACE}/VFB_neo4j
 git pull origin master
 git checkout ${GITBRANCH}
