@@ -19,7 +19,7 @@ ENV KBuser=neo4j
 
 ENV KBpassword=password
 
-ENV GITBRANCH=kbold2new
+ENV GITBRANCH=kbold2new_neo4j_v4
 
 ENV RUNSILENT=https://raw.githubusercontent.com/VirtualFlyBrain/pipeline/master/runsilent.sh
 
